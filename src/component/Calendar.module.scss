@@ -20,6 +20,11 @@
         cursor: pointer;
       }
     }
+
+    .selected-days {
+      font-size: 24px;
+      font-weight: bold;
+    }
   }
 
   .calendar {
@@ -62,6 +67,16 @@
 
         &--saturday {
           color: blue;
+        }
+
+        &--between {
+          color: black;
+          background-color: lightgrey;
+        }
+
+        &--selected {
+          color: white;
+          background-color: black;
         }
       }
     }

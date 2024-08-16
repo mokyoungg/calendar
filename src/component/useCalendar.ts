@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const useCalendar = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
 
   const monthStartData = new Date(
     currentDate.getFullYear(),
@@ -71,11 +72,39 @@ const useCalendar = () => {
     );
   };
 
+  // date 를 선택하는 함수입니다.
+  const selectDate = (date: Date) => {
+    const dateString = date.toDateString();
+
+    if (selectedDates.length === 2) {
+      setSelectedDates([date]);
+    } else {
+      setSelectedDates((prev) => {
+        const prevDateStrings = prev.map((prevDate) => prevDate.toDateString());
+
+        if (prevDateStrings.includes(dateString)) {
+          return prev.filter(
+            (prevDate) => prevDate.toDateString() !== dateString
+          );
+        } else {
+          return prev.concat(date);
+        }
+      });
+    }
+  };
+
+  // 선택된 dates 를 시간순으로 정렬합니다.
+  const sortedSelectedDates = selectedDates.sort(
+    (a, b) => a.getTime() - b.getTime()
+  );
+
   return {
     currentDate,
     weeks,
+    sortedSelectedDates,
     moveToPrevMonth,
     moveToNextMonth,
+    selectDate,
   };
 };
 

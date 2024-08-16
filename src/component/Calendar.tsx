@@ -21,11 +21,25 @@ const months = [
 ];
 
 const Calendar = () => {
-  const { currentDate, weeks, moveToPrevMonth, moveToNextMonth } =
-    useCalendar();
+  const {
+    currentDate,
+    weeks,
+    sortedSelectedDates,
+    moveToPrevMonth,
+    moveToNextMonth,
+    selectDate,
+  } = useCalendar();
 
   const currentYear = currentDate.getFullYear() + "년";
   const currentMonth = months[currentDate.getMonth()];
+
+  const formatDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}.${month}.${day}`;
+  };
 
   return (
     <div className={cx("container")}>
@@ -35,6 +49,15 @@ const Calendar = () => {
           <div className={cx("month-notice")}>{currentYear + currentMonth}</div>
           <button onClick={moveToNextMonth}>{">"}</button>
         </div>
+
+        {sortedSelectedDates.length > 0 && (
+          <div className={cx("selected-days")}>
+            {formatDate(sortedSelectedDates[0])}
+            {sortedSelectedDates[1] && (
+              <span>{"-" + formatDate(sortedSelectedDates[1])}</span>
+            )}
+          </div>
+        )}
       </div>
 
       <div className={cx("calendar")}>
@@ -63,7 +86,16 @@ const Calendar = () => {
                         date.getMonth() !== currentDate.getMonth(),
                       "date--sunday": idx === 0,
                       "date--saturday": idx === 6,
+                      "date--between":
+                        sortedSelectedDates[0] &&
+                        sortedSelectedDates[0].getTime() < date.getTime() &&
+                        sortedSelectedDates[1] &&
+                        sortedSelectedDates[1].getTime() > date.getTime(),
+                      "date--selected": sortedSelectedDates.some(
+                        (sortedDate) => sortedDate.getTime() === date.getTime()
+                      ),
                     })}
+                    onClick={() => selectDate(date)}
                   >
                     {date.getDate()}
                   </div>
