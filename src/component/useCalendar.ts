@@ -59,9 +59,23 @@ const useCalendar = () => {
 
   const weeks = getWeeksArray(calendarAllDates);
 
+  const moveToPrevMonth = () => {
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
+    );
+  };
+
+  const moveToNextMonth = () => {
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
+    );
+  };
+
   return {
     currentDate,
     weeks,
+    moveToPrevMonth,
+    moveToNextMonth,
   };
 };
 

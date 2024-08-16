@@ -3,6 +3,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .month-view {
+      display: flex;
+      gap: 12px;
+
+      .month-notice {
+        font-size: 36px;
+        font-weight: bold;
+      }
+
+      button {
+        font-size: 36px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+    }
   }
 
   .calendar {
