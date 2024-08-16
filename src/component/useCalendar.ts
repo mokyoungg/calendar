@@ -59,10 +59,9 @@ const useCalendar = () => {
 
   const weeks = getWeeksArray(calendarAllDates);
 
-  console.log("cal :", calendarAllWeeks);
-
   return {
-    calendarAllWeeks,
+    currentDate,
+    weeks,
   };
 };
 
